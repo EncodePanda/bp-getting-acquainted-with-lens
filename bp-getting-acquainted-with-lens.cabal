@@ -1,0 +1,26 @@
+cabal-version: 2.1
+
+name:           bp-getting-acquainted-with-lens
+version:        0.1.0.0
+license-file:   LICENSE
+author:         Paweł Szulc
+maintainer:     Paweł Szulc
+copyright:      Paweł Szulc
+category:       BlogPost
+build-type:     Simple
+
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/EncodePanda/bp-getting-acquainted-with-lens
+
+library
+  exposed-modules:
+      EncodePanda.Lens
+  hs-source-dirs:
+      src
+  build-depends:
+        base >=4.7 && <5
+  default-language: Haskell2010
