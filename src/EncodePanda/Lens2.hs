@@ -1,10 +1,12 @@
+{-# LANGUAGE DuplicateRecordFields #-}
 module EncodePanda.Lens2 where
 
 import Data.Function ((&))
 
 -- start snippet conference-datatype
 data Conference = Conference
-  { organizer :: Organizer
+  { name :: String
+  , organizer :: Organizer
   , speakers  :: [Speaker]
   } deriving Show
 -- end snippet conference-datatype
@@ -18,7 +20,8 @@ data Organizer = Organizer
 
 -- start snippet speaker-datatype
 data Speaker = Speaker
-  { slidesReady :: Bool
+  { name :: Name
+  , slidesReady :: Bool
   } deriving Show
 -- end snippet speaker-datatype
 
