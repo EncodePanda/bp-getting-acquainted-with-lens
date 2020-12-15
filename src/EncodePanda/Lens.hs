@@ -1,5 +1,7 @@
 module EncodePanda.Lens where
 
+import Data.Function ((&))
+
 -- start snippet conference-datatype
 data Conference = Conference
   { organizer :: Organizer
@@ -55,3 +57,12 @@ classified = Contact
   { address = Address "Class" "ified" "Classified"
   , email = "oli@haskell.love"
   }
+
+-- start snippet organizerCountry
+organizerCountry :: Conference -> String
+organizerCountry conf =
+  conf & organizer
+       & contact
+       & address
+       & country
+-- end snippet organizerCountry

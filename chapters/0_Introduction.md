@@ -100,3 +100,47 @@ name oli
 :t contact
 contact oli
 }}}
+
+This can even look nicer if we use `&` operator from `Data.Function`
+
+
+{{{ghci session1
+import Data.Function ((&))
+:t (&)
+}}}
+
+Here we see that `&` is a simple function application, where instead of providing function name and the argument (as we would normally do)
+
+{{{ghci session1
+length [4, 6, 8]
+}}}
+
+we provide first the argument and then the function name
+
+{{{ghci session1
+[4, 6, 8] & length
+}}}
+
+This allow us to change previous call to `name` from
+
+{{{ghci session1
+name oli
+}}}
+
+to
+
+{{{ghci session1
+oli & name
+}}}
+
+It does not seem much at first, but you can observe that this approach composes nicely when you want to read value of a deeply nested record.
+
+{{{ghci session1
+oli & name & firstName
+}}}
+
+This resembles dot-like record access that is available in other languages. Correctly formated makes accessing deeply nested values a pleasure experience
+
+```haskell
+{{ fileSection src/EncodePanda/Lens.hs organizerCountry }}
+```
