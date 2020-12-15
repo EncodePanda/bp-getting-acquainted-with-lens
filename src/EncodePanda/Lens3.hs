@@ -64,6 +64,54 @@ oli = Organizer
   }
 -- end snippet oli
 
+-- start snippet conference
+conference :: Conference
+conference = Conference
+  { name = "Haskell.Love"
+  , organizer = oli
+  , speakers = []
+  }
+-- end snippet conference
+
+-- start snippet speakers
+pawel :: Speaker
+pawel = Speaker
+  { name = Name "Pawel" "Szulc"
+  , slidesReady = False
+  }
+
+marcin :: Speaker
+marcin = Speaker
+  { name = Name "Marcin" "Rzeznicki"
+  , slidesReady = True
+  }
+-- end snippet speakers
+
+-- start snippet allSpeakersNotReady
+allSpeakersNotReady :: Conference -> Conference
+allSpeakersNotReady conference =
+  let
+    oldSpeakers = conference & speakers
+  in
+    conference {
+      speakers =
+	    fmap (\s -> s { slidesReady = False}) oldSpeakers
+    }
+-- end snippet allSpeakersNotReady
+
+-- start snippet changeOrganizerEmail
+changeOrganizerEmail :: (String -> String) -> Conference ->  Conference
+changeOrganizerEmail modifyEmail conference =
+  let
+    oldOrganizer = conference & organizer
+    newContact = (oldOrganizer & contact)
+      { email = modifyEmail (oldOrganizer & contact & email)
+      }
+    newOrganizer = oldOrganizer { contact = newContact}
+  in
+    conference { organizer = newOrganizer }
+-- end snippet changeOrganizerEmail
+
 classified :: Contact
 classified = Contact
   { address = Address "Class" "ified" "Classified"
