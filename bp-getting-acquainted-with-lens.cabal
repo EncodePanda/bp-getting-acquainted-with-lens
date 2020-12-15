@@ -19,6 +19,7 @@ source-repository head
 library
   exposed-modules:
       EncodePanda.Lens
+      EncodePanda.Lens2
   hs-source-dirs:
       src
   build-depends:
