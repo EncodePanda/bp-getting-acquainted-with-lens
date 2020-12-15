@@ -1,6 +1,7 @@
 module EncodePanda.Lens3 where
 
 import Data.Function ((&))
+import GHC.OverloadedLabels (IsLabel (..))
 
 -- start snippet conference-datatype
 data Conference = Conference
@@ -10,6 +11,9 @@ data Conference = Conference
   } deriving Show
 -- end snippet conference-datatype
 
+instance IsLabel "name" (Conference -> String) where
+   fromLabel = name
+
 -- start snippet organizer-datatype
 data Organizer = Organizer
   { name    :: Name
@@ -17,12 +21,18 @@ data Organizer = Organizer
   } deriving Show
 -- end snippet organizer-datatype
 
+instance IsLabel "name" (Organizer -> Name) where
+   fromLabel = name
+
 -- start snippet speaker-datatype
 data Speaker = Speaker
   { name :: Name
   , slidesReady :: Bool
   } deriving Show
 -- end snippet speaker-datatype
+
+instance IsLabel "name" (Speaker -> Name) where
+   fromLabel = name
 
 -- start snippet name-datatype
 data Name = Name
