@@ -79,3 +79,23 @@ and `Address` encapsulates `street`, `city` and `country`:
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs address-datatype }}
 ```
+
+Now we just need an example of a conference organizer, a value that we could play with in the REPL. While creating this blog post, I could not miss the opportunity to pay my tribute to [Oli Makhasoeva](https://twitter.com/Oli_kitty) - one of the best conference organizers on the planet, the master mind behind such events as [Haskell Love](http://haskell.love) or [Scala Love](http://scala.love/conf).
+
+Let's create a value of type `Organizer` called `oli`:
+
+```haskell
+{{ fileSection src/EncodePanda/Lens.hs oli }}
+```
+
+### Fetching values from records
+
+We can observe that both `name` and `contact` are in fact accessor functions that allow us to retrieve values from records:
+
+{{{ghci session1
+:l src/EncodePanda/Lens.hs
+:t name
+name oli
+:t contact
+contact oli
+}}}

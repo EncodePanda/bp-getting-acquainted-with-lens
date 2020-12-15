@@ -41,3 +41,17 @@ data Address = Address
   , country :: String
   } deriving Show
 -- end snippet address-datatype
+
+-- start snippet oli
+oli :: Organizer
+oli = Organizer
+  { name = Name "Oli" "Makhasoeva"
+  , contact = classified
+  }
+-- end snippet oli
+
+classified :: Contact
+classified = Contact
+  { address = Address "Class" "ified" "Classified"
+  , email = "oli@haskell.love"
+  }
