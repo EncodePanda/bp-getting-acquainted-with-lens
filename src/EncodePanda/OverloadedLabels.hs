@@ -14,5 +14,5 @@ instance IsLabel "encodepanda" Speaker where
 
 -- start snippet pawel
 pawel :: Speaker
-pawel = fromLabel @"encodepanda"
+pawel = #encodepanda
 -- end snippet pawel
