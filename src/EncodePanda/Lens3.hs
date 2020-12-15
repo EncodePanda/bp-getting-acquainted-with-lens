@@ -78,3 +78,9 @@ organizerCountry conf =
        & address
        & country
 -- end snippet organizerCountry
+
+-- start snippet organizerName
+organizerName :: Conference -> Name
+organizerName conference =
+  conference & organizer & #name
+-- end snippet organizerName
