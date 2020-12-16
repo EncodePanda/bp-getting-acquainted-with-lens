@@ -17,13 +17,13 @@ In this post we will explore a concept of a Lens. More concretely the [Lens libr
 
 ### What problem they are trying to solve?
 
-It is my observation that any newcommer to the Haskell ecosystem, who gets excited with the language, stumbles upon two limitations of the language design. Mainly:
+It is my observation that any newcomer to the Haskell ecosystem, who gets excited with the language, stumbles upon two limitations of the language design. Mainly:
 
 1. Record syntax
 2. Strings
 
-Those two are suprising to newcomers, especially because both record syntax and Strings are considered a no-brainer in almost every other programming language. Writing about String representation in Haskell deserves a blog post on its own. Today we want to focus on a **record syntax**, trying to understand what are its limitations and main source of frustration.
-And frustrating in did it is. Below few quotes scrapped from the Internet to back that claim.
+Those two are suprising to newcomers, especially because both record syntax and strings are considered a no-brainer in almost every other programming language. Writing about string representation in Haskell deserves a blog post on its own. Today we want to focus on **record syntax**, trying to understand what are its limitations and main source of frustration.
+And frustrating indeed it is. Below are a few quotes scrapped from the Internet to back that claim.
 
 > *"The record system is a continual source of pain"*
 - Stephen Diehl
@@ -31,59 +31,58 @@ And frustrating in did it is. Below few quotes scrapped from the Internet to bac
 > *"What is your least favorite thing about Haskell? Records are still tedious"*
 - 2018 State of Haskell Survey
 
-
 > *"Shitty records."*
 - Someone on reddit
 
 ### An example
 
-[Someone famous](https://en.wikipedia.org/wiki/Linus_Torvalds) once said "Talk is cheap, show me the code". In that sprit let's explore an example project in which those problems are clearly visible.
+[Someone famous](https://en.wikipedia.org/wiki/Linus_Torvalds) once said, "Talk is cheap, show me the code." In that sprit, let's explore an example project in which those problems are clearly visible.
 
-We will use the latest version of GHC Haskell
+We will use the latest version of GHC Haskell:
 
 ```bash
 {{{{ shellOutput ghc --version }}}}
 ```
 
-and a standard cabal project
+and a standard cabal project:
 
 ```bash
 {{ file bp-getting-acquainted-with-lens.cabal  }}
 ```
 
-Imagine we are writing a tool allowing conference organizers to maintain their events. We have a datatype `Conference`
+Imagine we are writing a tool allowing conference organizers to maintain their events. We have a datatype `Conference`:
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs conference-datatype }}
 ```
 
-where `Organizer` is
+where `Organizer` is:
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs organizer-datatype }}
 ```
 
-and `Speaker` is
+and `Speaker` is:
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs speaker-datatype }}
 ```
 
-Organizer has a `Name` and `Address`. `Name` is a simple record with `firstName` and `lastName`
+Organizer has a `Name` and `Address`. `Name` is a simple record with `firstName` and `lastName`:
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs name-datatype }}
 ```
 
-and `Address` encapsulates `street`, `city` and `country`
+and `Address` encapsulates `street`, `city` and `country`:
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs address-datatype }}
 ```
 
-Now we just need example of a conference organizer, a value that we could play with in the REPL . While creating this blog post I could not miss the opportunity to pay my tribute to [Oli Makhasoeva](https://twitter.com/Oli_kitty) - one of the best conference organizers on the planet, master mind behind such events as [Haskell Love](http://haskell.love) or [Scala Love](http://scala.love/conf).
+Now we just need an example of a conference organizer, a value that we could play with in the REPL. While creating this blog post, I could not miss the opportunity to pay my tribute to [Oli Makhasoeva](https://twitter.com/Oli_kitty) - one of the best conference organizers on the planet, the master mind behind such events as [Haskell Love](http://haskell.love) or [Scala Love](http://scala.love/conf).
 
-Let's create a value of type `Organizer` called `oli`
+Let's create a value of type `Organizer` called `oli`:
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs oli }}
@@ -91,7 +90,7 @@ Let's create a value of type `Organizer` called `oli`
 
 ### Fetching values from records
 
-We can observe that both `name` and `contact` are in fact accessor functions that allow us to retrieve values from records
+We can observe that both `name` and `contact` are in fact accessor functions that allow us to retrieve values from records:
 
 {{{ghci session1
 :l src/EncodePanda/Lens.hs
@@ -101,7 +100,7 @@ name oli
 contact oli
 }}}
 
-This can even look nicer if we use `&` operator from `Data.Function`
+This can even look nicer if we use `&` operator from `Data.Function`:
 
 
 {{{ghci session1
@@ -109,37 +108,37 @@ import Data.Function ((&))
 :t (&)
 }}}
 
-Here we see that `&` is a simple function application, where instead of providing function name and the argument (as we would normally do)
+Here we see that `&` is a simple function application, where instead of providing function name and the argument (as we would normally do):
 
 {{{ghci session1
 length [4, 6, 8]
 }}}
 
-we provide first the argument and then the function name
+we provide first the argument and then the function name:
 
 {{{ghci session1
 [4, 6, 8] & length
 }}}
 
-This allow us to change previous call to `name` from
+This allow us to change previous call to `name` from:
 
 {{{ghci session1
 name oli
 }}}
 
-to
+to:
 
 {{{ghci session1
 oli & name
 }}}
 
-It does not seem much at first, but you can observe that this approach composes nicely when you want to read value of a deeply nested record.
+It does not seem much at first, but you can observe that this approach composes nicely when you want to read the value of a deeply nested record:
 
 {{{ghci session1
 oli & name & firstName
 }}}
 
-This resembles dot-like record access that is available in other languages. Correctly formated makes accessing deeply nested values a pleasure experience
+This resembles dot-like record access that is available in other languages. Correctly formatted makes accessing deeply nested values a pleasure experience
 
 ```haskell
 {{ fileSection src/EncodePanda/Lens.hs organizerCountry }}
