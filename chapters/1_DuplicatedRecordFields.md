@@ -1,11 +1,11 @@
 
-But when we do a slight modification to our code, where not only `Organizer` has a `name` field
+But when we do a slight modification to our code, where not only `Organizer` has a `name` field:
 
 ```diff
 {{{{ shellOutput git diff HEAD^ HEAD src/EncodePanda/Lens2.hs | sed -e '1,6d' | sed '/^@/d' | sed '/\[-- end snippet\]/d' }}}}
 ```
 
-the code suddenly stops compiling
+the code suddenly stops compiling:
 
 ```haskell
 $> cabal build
@@ -27,7 +27,7 @@ src/EncodePanda/Lens2.hs:22:5: error:
    |     ^^^^
 ```
 
-There is one trick we could do make it work... Have you guess it? Yes, it is GHC, we can always add a language extension
+There is one trick we could do make it work...Have you guessed it? Yes, it is GHC. We can always add a language extension:
 
 ```diff
 {{{{ shellOutput git diff HEAD^ HEAD src/EncodePanda/Lens2.hs | sed -e '1,5d' | head -n 2 }}}}
@@ -41,7 +41,7 @@ $> cabal build
 {{{{ shellOutput cabal build }}}}
 ```
 
-But when we try to use the `name` function
+But when we try to use the `name` function:
 
 ```haskell
 organizerName :: Conference -> Name
@@ -49,7 +49,7 @@ organizerName conference =
   conference & organizer & name
 ```
 
-compiler gives us a quick reality check
+The compiler gives us a quick reality check:
 
 ```haskell
 src/EncodePanda/Lens2.hs:76:28: error:
